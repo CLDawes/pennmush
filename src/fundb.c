@@ -2301,6 +2301,20 @@ FUNCTION(fun_attrib_set)
   }
 }
 
+FUNCTION(fun_a)
+{
+  if (!FUNCTION_SIDE_EFFECTS) {
+    safe_str(T(e_disabled), buff, bp);
+    return;
+  }
+  if (!command_check_byname(executor, "ATTRIB_SET", pe_info)
+      || fun->flags & FN_NOSIDEFX) {
+    safe_str(T(e_perm), buff, bp);
+    return;
+  }
+  do_set_atr(executor, args[0], args[1], executor, 1);
+}
+
 /* --------------------------------------------------------------------------
  * Misc functions: TEL
  */
